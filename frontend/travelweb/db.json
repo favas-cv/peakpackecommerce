@@ -1,0 +1,674 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Trekking Backpack",
+      "category": "Trekking",
+      "season": "Summer",
+      "price": "55",
+      "image": "/images/bg1.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Camping Tent",
+      "category": "Camping",
+      "season": "Summer",
+      "price": 99.99,
+      "image": "/images/ct1.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Snow Jacket",
+      "category": "Camping",
+      "season": "Winter",
+      "price": 129.99,
+      "image": "/images/jw1.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Beach Umbrella",
+      "category": "Beach-Trips",
+      "season": "Summer",
+      "price": 29.99,
+      "image": "/images/u1.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Hiking Boots",
+      "category": "Trekking",
+      "season": "Winter",
+      "price": 79.99,
+      "image": "/images/shoe.jpg"
+    },
+    {
+      "id": "6",
+      "name": "Sleeping Bag",
+      "category": "Camping",
+      "season": "Winter",
+      "price": 59.99,
+      "image": "/images/sb1.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Beach Mat",
+      "category": "Beach-Trips",
+      "season": "Summer",
+      "price": 19.99,
+      "image": "/images/bm1.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Winter Gloves",
+      "category": "Trekking",
+      "season": "Winter",
+      "price": 24.99,
+      "image": "/images/gw1.jpg"
+    },
+    {
+      "id": "9",
+      "name": "Portable Cooler",
+      "category": "Camping",
+      "season": "Summer",
+      "price": 39.99,
+      "image": "/images/pf1.jpg"
+    },
+    {
+      "id": "10",
+      "name": "Sunglasses",
+      "category": "Trekking",
+      "season": "Summer",
+      "price": 14.99,
+      "image": "/images/g2.jpg"
+    },
+    {
+      "id": "111",
+      "name": "Mountain Trekking Boots",
+      "price": 120,
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/hikingshoe.jpg"
+    },
+    {
+      "id": "112",
+      "name": "Summer Camping Tent",
+      "price": 90,
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/t1.jpg"
+    },
+    {
+      "id": "114",
+      "name": "Rain Jacket",
+      "price": 60,
+      "category": "Trekking",
+      "season": "Rainy",
+      "image": "/images/rc1.jpg"
+    },
+    {
+      "id": "115",
+      "name": "Waterproof Backpack",
+      "price": 70,
+      "category": "Camping",
+      "season": "Rainy",
+      "image": "/images/tbg2.jpg"
+    },
+    {
+      "id": "116",
+      "name": "Winter Sleeping Bag",
+      "price": 80,
+      "category": "Camping",
+      "season": "Winter",
+      "image": "/images/wsb1.jpg.webp"
+    },
+    {
+      "id": "117",
+      "name": "Road Trip Cooler Box",
+      "price": 55,
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/cf1.jpg"
+    },
+    {
+      "id": "118",
+      "name": "Rainproof Hiking Pants",
+      "price": 65,
+      "category": "Trekking",
+      "season": "Rainy",
+      "image": "/images/pt2.jpg"
+    },
+    {
+      "id": "119",
+      "name": "Thermal Jacket",
+      "price": 150,
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/jw2.jpg"
+    },
+    {
+      "id": "120",
+      "name": "Cap-Beach",
+      "price": 20,
+      "category": "Beach-Trips",
+      "season": "Summer",
+      "image": "/images/cps1.jpg"
+    },
+    {
+      "id": "6bc5",
+      "name": "Cap ",
+      "price": "9.99",
+      "category": "Trekking",
+      "season": "Summer",
+      "image": "/images/cps2.jpg"
+    },
+    {
+      "id": "1324",
+      "name": "Chair",
+      "price": "16",
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/c3.jpg"
+    },
+    {
+      "id": "5bc8",
+      "name": "Flexible-Chair",
+      "price": "15.99",
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/c1.jpg"
+    },
+    {
+      "id": "4f2d",
+      "name": "Car-Tent",
+      "price": "48",
+      "category": "Camping",
+      "season": "All",
+      "image": "/images/ct3.jpg"
+    },
+    {
+      "id": "92c3",
+      "name": "Convertible Chair",
+      "price": "19.9",
+      "category": "Camping",
+      "season": "Winter",
+      "image": "/images/c2.jpg"
+    },
+    {
+      "id": "ba62",
+      "name": "Campfire Set",
+      "price": "20",
+      "category": "Camping",
+      "season": "Winter",
+      "image": "/images/cf.jpg"
+    },
+    {
+      "id": "2090",
+      "name": "Winter Cap",
+      "price": "10",
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/cpw1.jpg"
+    },
+    {
+      "id": "61bc",
+      "name": "Winter Cap Trekking",
+      "price": "15",
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/cpw2.jpg"
+    },
+    {
+      "id": "0f89",
+      "name": "Beach Cap",
+      "price": "8",
+      "category": "Beach-Trips",
+      "season": "Summer",
+      "image": "/images/cps4.jpg"
+    },
+    {
+      "id": "e59c",
+      "name": "Fasttrack Sunglass  ",
+      "price": "15",
+      "category": "Beach-Trips",
+      "season": "Summer",
+      "image": "/images/g3.jpg"
+    },
+    {
+      "id": "f881",
+      "name": "Winter UV glass",
+      "price": "20",
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/glass1.jpg"
+    },
+    {
+      "id": "1619",
+      "name": "Winter Jacket -10C",
+      "price": "25",
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/jw4.jpg"
+    },
+    {
+      "id": "d1e1",
+      "name": "PowerBank",
+      "price": "55",
+      "category": "Electronics",
+      "season": "All",
+      "image": "/images/pe.jpg"
+    },
+    {
+      "id": "e8e5",
+      "name": "RainCoat",
+      "price": "17",
+      "category": "Rainy",
+      "season": "Rainy",
+      "image": "/images/rb2.jpg"
+    },
+    {
+      "id": "b000",
+      "name": "Full Covering Raincoat",
+      "price": "15",
+      "category": "Rainy",
+      "season": "Rainy",
+      "image": "/images/rb3.jpg"
+    },
+    {
+      "id": "06a2",
+      "name": "Winter Jacket -20C",
+      "price": "50",
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/jw3.jpg"
+    },
+    {
+      "id": "4ad2",
+      "name": "Convertible Trekking Pant",
+      "price": "14",
+      "category": "Trekking",
+      "season": "Summer",
+      "image": "/images/pt3.jpg"
+    },
+    {
+      "id": "f9ad",
+      "name": "Convertible Pant Normal",
+      "price": "9.99",
+      "category": "Trekking",
+      "season": "Summer",
+      "image": "/images/pt1.jpg"
+    },
+    {
+      "id": "eee1",
+      "name": "Tent 4 Person",
+      "price": "99",
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/t5.jpg"
+    },
+    {
+      "id": "9666",
+      "name": "2 Person Tent",
+      "price": "25",
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/t2.jpg"
+    },
+    {
+      "id": "d72d",
+      "name": "Table Flexible",
+      "price": "32",
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/tb1.jpg"
+    },
+    {
+      "id": "c4fd",
+      "name": "Table Buildup",
+      "price": "23",
+      "category": "Camping",
+      "season": "Summer",
+      "image": "/images/tb2.jpg"
+    },
+    {
+      "id": "45e0",
+      "name": "55L Trekking Backpack",
+      "price": "65",
+      "category": "Trekking",
+      "season": "Summer",
+      "image": "/images/tbg2.jpg"
+    },
+    {
+      "id": "92f9",
+      "name": "33L Trekking Backpack",
+      "price": "35",
+      "category": "Trekking",
+      "season": "Winter",
+      "image": "/images/tbg1.jpg"
+    },
+    {
+      "id": "2dce",
+      "name": "Universal Cable ",
+      "price": "22",
+      "category": "Electronics",
+      "season": "All",
+      "image": "/images/ue3.jpg"
+    },
+    {
+      "id": "36a5",
+      "name": "Universal  Adaptor",
+      "price": "55",
+      "category": "Electronics",
+      "season": "All",
+      "image": "/images/ue2.jpg"
+    },
+    {
+      "id": "e4a9",
+      "name": "Waterproof Case",
+      "price": "10",
+      "category": "Electronics",
+      "season": "Rainy",
+      "image": "/images/wpr1.jpg"
+    },
+    {
+      "id": "08bb",
+      "name": "Waterproof Case Combo X2",
+      "price": "15",
+      "category": "Electronics",
+      "season": "Rainy",
+      "image": "/images/cps1.jpg"
+    },
+    {
+      "id": "3d54",
+      "name": "Shorts For Trekking",
+      "price": "22",
+      "category": "Trekking",
+      "season": "Summer",
+      "image": "/images/st1.jpg"
+    },
+    {
+      "id": "6bca",
+      "name": "Shorts For Men",
+      "price": "24",
+      "category": "Trekking",
+      "season": "Summer",
+      "image": "/images/st2.jpg"
+    },
+    {
+      "id": "59e1",
+      "name": "SUV Tent",
+      "price": "400",
+      "category": "Camping",
+      "season": "Winter",
+      "image": "/images/ct2.jpg"
+    },
+    {
+      "id": "976c",
+      "name": "SUV Tent (Winter)",
+      "price": "500",
+      "category": "Camping",
+      "season": "Winter",
+      "image": "/images/ct1.jpg"
+    },
+    {
+      "id": "e571",
+      "name": "Universal Socket",
+      "price": "35",
+      "category": "Electronics",
+      "season": "All",
+      "image": "/images/ae1.jpg"
+    },
+    {
+      "id": "b179",
+      "name": "cap",
+      "price": "45",
+      "category": "Trekking",
+      "season": "Summer",
+      "image": "/images/cps1.jpg"
+    }
+  ],
+  "users": [
+    {
+      "id": "080f",
+      "name": "ronaldo cv ",
+      "email": "cr7@gmail.com",
+      "password": "123456",
+      "status": "unblocked",
+      "bag": [],
+      "favorites": [],
+      "orders": [],
+      "role": "admin"
+    },
+    {
+      "id": "626a",
+      "name": "favascv",
+      "email": "favascv@gmail.com",
+      "password": "123456",
+      "status": "unblocked",
+      "bag": [],
+      "favorites": [
+        {
+          "id": "3",
+          "name": "Snow Jacket",
+          "category": "Camping",
+          "season": "Winter",
+          "price": 129.99,
+          "image": "/images/jw1.jpg"
+        },
+        {
+          "id": "5",
+          "name": "Hiking Boots",
+          "category": "Trekking",
+          "season": "Winter",
+          "price": 79.99,
+          "image": "/images/shoe.jpg"
+        }
+      ],
+      "orders": [
+        {
+          "items": [
+            {
+              "id": "2",
+              "name": "Camping Tent",
+              "category": "Camping",
+              "season": "Summer",
+              "price": 99.99,
+              "image": "/images/ct1.jpg",
+              "quantity": 1
+            },
+            {
+              "id": "1",
+              "name": "Trekking Backpack",
+              "category": "Trekking",
+              "season": "Summer",
+              "price": 49.99,
+              "image": "/images/bg1.jpg",
+              "quantity": 1
+            }
+          ],
+          "subtotal": 150,
+          "delivery": 40,
+          "total": 190,
+          "paymentMethod": "Cash",
+          "date": "2025-10-03T04:42:54.162Z",
+          "address": {
+            "Fullname": "favascv",
+            "StreetAddress": "kozhikode",
+            "City_State_zip": "kerala",
+            "Phone": "6325419875"
+          },
+          "status": "Shipped"
+        },
+        {
+          "items": [
+            {
+              "id": "111",
+              "name": "Mountain Trekking Boots",
+              "price": 120,
+              "category": "Trekking",
+              "season": "Winter",
+              "image": "/images/hikingshoe.jpg",
+              "quantity": 1
+            },
+            {
+              "id": "114",
+              "name": "Rain Jacket",
+              "price": 60,
+              "category": "Trekking",
+              "season": "Rainy",
+              "image": "/images/rc1.jpg",
+              "quantity": 1
+            }
+          ],
+          "subtotal": 180,
+          "delivery": 40,
+          "total": 220,
+          "paymentMethod": "Cash",
+          "date": "2025-10-03T05:30:46.936Z",
+          "address": {
+            "Fullname": "favascv",
+            "StreetAddress": "kozhikode",
+            "City_State_zip": "kerala",
+            "Phone": "6325419875"
+          },
+          "status": "Delivered"
+        }
+      ],
+      "role": "admin",
+      "addresses": [
+        {
+          "Fullname": "favascv",
+          "StreetAddress": "kozhikode",
+          "City_State_zip": "kerala",
+          "Phone": "6325419875"
+        }
+      ]
+    },
+    {
+      "id": "a72b",
+      "name": "sajeer",
+      "email": "sajeer@gmail.com",
+      "password": "123456",
+      "status": "blocked",
+      "bag": [],
+      "favorites": [
+        {
+          "id": "2",
+          "name": "Camping Tent",
+          "category": "Camping",
+          "season": "Summer",
+          "price": 99.99,
+          "image": "/images/ct1.jpg"
+        }
+      ],
+      "orders": [
+        {
+          "items": [
+            {
+              "id": "2",
+              "name": "Camping Tent",
+              "category": "Camping",
+              "season": "Summer",
+              "price": 99.99,
+              "image": "/images/ct1.jpg",
+              "quantity": 1
+            }
+          ],
+          "subtotal": 100,
+          "delivery": 40,
+          "total": 140,
+          "paymentMethod": "Cash",
+          "date": "2025-10-03T10:04:36.656Z",
+          "address": {
+            "Fullname": "muhammed",
+            "StreetAddress": "kozhikode",
+            "City_State_zip": "kerala",
+            "Phone": "36959595"
+          },
+          "status": "Shipped"
+        },
+        {
+          "items": [
+            {
+              "id": "2",
+              "name": "Camping Tent",
+              "category": "Camping",
+              "season": "Summer",
+              "price": 99.99,
+              "image": "/images/ct1.jpg",
+              "quantity": 1
+            },
+            {
+              "id": "10",
+              "name": "Sunglasses",
+              "category": "Trekking",
+              "season": "Summer",
+              "price": 14.99,
+              "image": "/images/g2.jpg",
+              "quantity": 1
+            },
+            {
+              "id": "115",
+              "name": "Waterproof Backpack",
+              "price": 70,
+              "category": "Camping",
+              "season": "Rainy",
+              "image": "/images/tbg2.jpg",
+              "quantity": 1
+            }
+          ],
+          "subtotal": 185,
+          "delivery": 40,
+          "total": 225,
+          "paymentMethod": "UPI",
+          "date": "2025-10-03T10:07:08.356Z",
+          "address": {
+            "Fullname": "muhammed",
+            "StreetAddress": "kozhikode",
+            "City_State_zip": "kerala",
+            "Phone": "36959595"
+          },
+          "status": "pending"
+        },
+        {
+          "items": [
+            {
+              "id": "2",
+              "name": "Camping Tent",
+              "category": "Camping",
+              "season": "Summer",
+              "price": 99.99,
+              "image": "/images/ct1.jpg",
+              "quantity": 1
+            }
+          ],
+          "subtotal": 100,
+          "delivery": 40,
+          "total": 140,
+          "paymentMethod": "Cash",
+          "date": "2025-10-03T11:38:43.105Z",
+          "address": {
+            "Fullname": "muhammed",
+            "StreetAddress": "kozhikode",
+            "City_State_zip": "kerala",
+            "Phone": "36959595"
+          },
+          "status": "Delivered"
+        }
+      ],
+      "role": "user",
+      "addresses": [
+        {
+          "Fullname": "muhammed",
+          "StreetAddress": "kozhikode",
+          "City_State_zip": "kerala",
+          "Phone": "36959595"
+        },
+        {
+          "Fullname": "hhh",
+          "StreetAddress": "hnhn",
+          "City_State_zip": "nhn",
+          "Phone": "fwefef"
+        }
+      ]
+    }
+  ]
+}
