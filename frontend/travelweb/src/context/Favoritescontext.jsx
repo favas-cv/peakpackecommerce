@@ -66,7 +66,6 @@ export function Favoritesprovider({ children }) {
           updatedFavorites=(user.favorites ||[]).filter(i=>i.id !== item.id);
         }else {
           updatedFavorites =[...(user.favorites||[]),item];
-          toast.success("added to fav" ,{toastId:"toggle"})
         }
 
         await axios.patch(URL,{favorites:updatedFavorites});

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaHeart, FaMapMarkerAlt } from "react-icons/fa";
+// Icons: FaShoppingCart, FaHeart, FaMapMarkerAlt, FaSignOutAlt, FaBoxOpen, FaStore
+import { FaShoppingCart, FaHeart, FaMapMarkerAlt, FaSignOutAlt, FaBoxOpen, FaStore } from "react-icons/fa"; 
 import { toast } from "react-toastify";
 import { Usercontext } from "../context/Usercontext";
 import { Bagcontext } from "../context/Bagcontext";
@@ -9,107 +10,126 @@ import { Favoritescontext } from "../context/Favoritescontext";
 function Profilepage() {
   const nav = useNavigate();
   const { user, setuser } = useContext(Usercontext);
-  const { favCount, favItems, setFavitems } = useContext(Favoritescontext);
-  const { bagCount, loading } = useContext(Bagcontext); 
+  const { favCount, setFavitems } = useContext(Favoritescontext);
+  const { bagCount, loading } = useContext(Bagcontext);
 
   const logouting = () => {
-
     localStorage.removeItem("user");
     localStorage.removeItem("favorites");
 
-    toast.success("Logged out successfully");
+    toast.success("Logged out successfully 👋");
     nav("/");
     setuser(null);
     setFavitems([]);
-
-
-
   };
 
-
+  // --- Not Logged In State (Styled) ---
   if (!user) {
     return (
-      <div className="text-center mt-10">
-        <p>You are not logged in</p>
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)] bg-gray-50 p-6">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-sky-950 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <p className="text-xl text-gray-700 font-medium mb-4">Access Denied</p>
+        <p className="text-gray-500 mb-6 text-center max-w-sm">
+          Please log in to view your profile and manage your account settings.
+        </p>
         <button
-          className="bg-green-800 backdrop-blur-md text-white px-4 py-2 rounded mt-4"
+          // Updated from bg-teal-600/700 to bg-sky-950
+          className="bg-sky-950 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:bg-sky-800 transition duration-300"
           onClick={() => nav("/loginpage")}
         >
-          Login
+          Login Now
         </button>
       </div>
     );
   }
 
   return (
-    <>
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
+
+      <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-gray-800 text-center lg:text-left">
+        WELCOME BACK !
+      </h1>
+
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+          {/* Changed border-teal-500 to border-sky-950 */}
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-sky-950"></div>
         </div>
       ) : (
-        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold">My Profile</h1>
-            <div className="flex gap-6 text-gray-700">
+        <div className="bg-white p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-100">
+
+          {/* User Header and Quick Stats */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-6 mb-6">
+            <div className="flex items-center gap-4">
+              {/* User Avatar Placeholder - Changed colors to lime-100 and sky-950 */}
+              <div className="w-16 h-16 bg-sky-100 text-sky-950 flex items-center justify-center rounded-full text-2xl font-bold border-2 border-sky-950">
+                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+              </div>
+              <div>
+                <h2 className="text-3xl font-extrabold text-sky-950">{user.name.toUpperCase()}</h2>
+                <p className="text-md text-gray-500">{user.email}</p>
+              </div>
+            </div>
+
+            {/* Quick Stats Badges */}
+            <div className="flex gap-4 mt-4 sm:mt-0">
               <div
-                className="flex items-center gap-1 cursor-pointer"
+                // Bag Count - Changed to sky-950 theme
+                className="flex items-center gap-2 p-3 bg-sky-50 text-sky-950 rounded-lg cursor-pointer hover:shadow-md transition"
                 onClick={() => nav("/bag")}
               >
-                <FaShoppingCart className="text-xl text-blue-500" />
-                <span>{bagCount}</span>
+                <FaShoppingCart className="text-xl" />
+                <span className="font-semibold">{bagCount} Items</span>
               </div>
               <div
-                className="flex items-center gap-1 cursor-pointer"
+                // Favorites Count - Changed to lime-500 theme
+                className="flex items-center gap-2 p-3 bg-red-100 text-sky-950 rounded-lg cursor-pointer hover:shadow-md transition"
                 onClick={() => nav("/favorites")}
               >
-                <FaHeart className="text-xl text-red-500" />
-                <span>{favCount}</span>
+                <FaHeart className="text-xl" />
+                <span className="font-semibold">{favCount} Favorites</span>
               </div>
             </div>
           </div>
 
-          <div className="mb-6 border-b pb-4">
-            <h2 className="text-xl font-semibold mb-2">Account Information</h2>
-            <p><strong>Name:</strong> {user.name}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-          </div>
+          {/* Account Details Section */}
+          <div className="space-y-6">
 
-          {user.address && (
-            <div className="mb-6 border-b pb-4">
-              <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
-                <FaMapMarkerAlt /> Address
-              </h2>
-              <p><strong>Full Name:</strong> {user.address.Fullname}</p>
-              <p><strong>Street:</strong> {user.address.StreetAddress}</p>
-              <p><strong>City/State/ZIP:</strong> {user.address.City_State_zip}</p>
-              <p><strong>Phone:</strong> {user.address.Phone}</p>
+            {/* Account Actions Buttons (Grid Layout) */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+
+              <button
+                // My Orders - Changed to sky-950 theme
+                className="flex items-center justify-center gap-2 bg-sky-950 text-white font-semibold px-4 py-3 rounded-xl shadow-lg hover:bg-sky-800 transition"
+                onClick={() => nav("/orderconfirmation")}
+              >
+                <FaBoxOpen /> My Orders
+              </button>
+
+              <button
+                // Shop More - Changed to a softer lime-500 background for a secondary action
+                className="flex items-center justify-center gap-2 bg-lime-500 text-sky-950 font-semibold px-4 py-3 rounded-xl shadow-lg hover:bg-lime-600 transition"
+                onClick={() => nav("/shop")}
+              >
+                <FaStore /> Shop More
+              </button>
+
+              <button
+                // Logout - Using sky-950 for a clean look, or use a classic red-600 if you want a warning color
+                // Keeping red-600 as it's the standard for 'exit' actions (feel free to change to sky-950 if preferred)
+                className="flex items-center justify-center gap-2 bg-red-600 text-white font-semibold px-4 py-3 rounded-xl shadow-lg hover:bg-red-700 transition"
+                onClick={logouting}
+              >
+                <FaSignOutAlt /> Logout
+              </button>
+
             </div>
-          )}
-
-          <div className="flex gap-4 mt-4">
-            <button
-              className="flex-1 bg-orange-400 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-              onClick={() => nav("/orderconfirmation")}
-            >
-              My Orders
-            </button>
-            <button
-              className="flex-1 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-              onClick={() => nav("/shop")}
-            >
-              Shop More
-            </button>
-            <button
-              className="flex-1 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-              onClick={logouting}
-            >
-              Logout
-            </button>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

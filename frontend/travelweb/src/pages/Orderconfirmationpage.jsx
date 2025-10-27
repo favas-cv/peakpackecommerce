@@ -3,132 +3,146 @@ import { Bagcontext } from "../context/Bagcontext";
 import { Usercontext } from "../context/Usercontext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Orderconfirmationpage() {
   const nav = useNavigate();
-  const { bagItems, subtotal, charge, URL, clearBag } = useContext(Bagcontext);
+  const { URL } = useContext(Bagcontext); // Removed bagItems, subtotal, charge, clearBag as they are not needed here
   const { user } = useContext(Usercontext);
 
   const [previousOrders, setPreviousOrders] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     if (user) {
       axios
         .get(URL)
         .then((res) => {
-          setPreviousOrders(res.data.orders || []);
+          // Set previous orders, reversed to show most recent first
+          setPreviousOrders((res.data.orders || []).reverse());
+          setLoading(false);
         })
-        .catch((err) => toast.error(err));
+        .catch((err) => {
+          toast.error("Failed to fetch orders.");
+          setLoading(false);
+        });
+    } else {
+      setLoading(false); // If no user, stop loading
     }
   }, [user, URL]);
 
- 
+  // --- Not Logged In State (Styled) ---
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)] bg-gray-50 p-4">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-gray-400 mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+        </svg>
+        <p className="text-xl text-gray-700 font-medium mb-4">You must be logged in to view your orders.</p>
+        <button
+          className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out"
+          onClick={() => nav("/loginpage")}
+        >
+          Login Now
+        </button>
+      </div>
+    );
+  }
+
+  // --- Loading State ---
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)] bg-gray-50 p-4">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-teal-500 mb-4"></div>
+        <p className="text-lg text-gray-700">Loading your orders...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
 
+      <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-gray-800 text-center lg:text-left">Your Orders</h1>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <h2 className="text-2xl font-semibold mb-4">Your Pending Order</h2>
-        {bagItems.length > 0 ? (
-          <>
-            <div className="space-y-4">
-              {bagItems.map((item) => (
-                <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                  <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />
+      {/* Previous Orders Section */}
+      <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        {previousOrders.length > 0 ? (
+          <div className="space-y-8">
+            {previousOrders.map((order, index) => (
+              <div key={index} className="bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-sm">
+                <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
+                  {/* Display order index starting from 1 for the most recent order */}
+                  <h3 className="font-bold text-lg text-gray-800">Order #{index + 1}</h3> 
+                  <span className={`px-3 py-1 text-sm font-semibold rounded-full 
+                    ${order.status === "pending" ? "bg-orange-100 text-orange-700" : 
+                      order.status === "delivered" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
+                    }`}>
+                    {order.status}
+                  </span>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 mb-5">
                   <div>
-                    <p className="font-semibold">{item.name}</p>
-                    <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                    <p><span className="font-semibold">Order Date:</span> {new Date(order.date).toLocaleDateString()} {new Date(order.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
+                    <p><span className="font-semibold">Payment Method:</span> {order.paymentMethod}</p>
                   </div>
-                  <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                  <div>
+                    <p className="font-semibold">Delivery Address:</p>
+                    <p>{order.address?.Fullname}</p>
+                    <p>{order.address?.StreetAddress}</p>
+                    <p>{order.address?.City_State_zip}</p>
+                    <p>📞 {order.address?.Phone}</p>
+                  </div>
                 </div>
 
-              ))}
-
-
-            </div>
-            <div className="bg-gray-100 p-4 rounded mt-4">
-              <p className="flex justify-between text-gray-600">
-                <span>Subtotal:</span> <span>${(subtotal - charge).toFixed(2)}</span>
-              </p>
-              <p className="flex justify-between text-gray-600">
-                <span>Delivery:</span> <span>${charge.toFixed(2)}</span>
-              </p>
-              <p className="flex justify-between font-bold text-lg mt-2">
-                <span>Total:</span> <span>${subtotal.toFixed(2)}</span>
-              </p>
-
-              <div className="flex justify-center mt-4">
-                <button
-                  onClick={() => nav("/orderdetailpage")}
-                  className="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-600 transition"
-                >
-                  Checkout
-                </button>
-              </div>
-            </div>
-
-          </>
-        ) : (
-          <p>Your bag is empty 😔</p>
-        )}
-      </div>
-
-      {/* orders */}
-
-
-
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <div className="flex justify-center ">
-
-        <h2 className="text-4xl font-bold text-orange-600 mb-4">Previous Orders</h2>
-        </div>
-
-        {previousOrders.length > 0 ? (
-          [...previousOrders].reverse().map((order, index) => (
-            <div key={index} className="space-y-4 mb-6">
-              <div className="bg-gray-50 p-4 rounded">
-                <h3 className="font-semibold">Order {previousOrders.length-index}</h3>
-                <div className="space-y-3">
+                <div className="space-y-3 mb-5 border-t pt-4">
                   {order.items.map((item) => (
                     <div key={item.id} className="flex items-center justify-between">
-                      <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded" />
-                      <div>
-                        <p className="font-medium">{item.name}</p>
-                        <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                      <div className="flex items-center gap-3">
+                        <img src={item.image} alt={item.name} className="w-12 h-12 object-contain rounded-lg border border-gray-100" />
+                        <div>
+                          <p className="font-medium text-gray-800">{item.name}</p>
+                          <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                        </div>
                       </div>
-                      <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                      <p className="font-semibold text-gray-800">${(item.price * item.quantity).toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-between mt-4 text-gray-600">
-                  <span>Subtotal:</span> <span>${(order.subtotal).toFixed(2)}</span>
+
+                <div className="bg-gray-100 p-3 rounded-lg mt-4 text-gray-700">
+                  <p className="flex justify-between">
+                    <span>Subtotal:</span> <span>${(order.subtotal).toFixed(2)}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span>Delivery:</span> <span>${order.delivery.toFixed(2)}</span>
+                  </p>
+                  <hr className="my-2 border-gray-200" />
+                  <p className="flex justify-between font-bold text-lg text-gray-900">
+                    <span>Total:</span> <span>${order.total.toFixed(2)}</span>
+                  </p>
                 </div>
-                <div className="flex justify-between text-gray-600">
-                  <span>Delivery:</span> <span>${order.delivery.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between font-semibold text-lg mt-2">
-                  <span>Total:</span> <span>${order.total.toFixed(2)}</span>
-                </div>
-                <div className="text-gray-600 mt-2">
-                  <span>Payment Method: </span>
-                  <span>{order.paymentMethod}</span>
-                </div>
-                <div className="text-gray-600 mt-2">
-                  <span>Status: </span>
-                  <span>{order.status}</span>
-                </div>
-                <p className="text-gray-600 mt-2">Order Date: {new Date(order.date).toLocaleDateString()}</p>
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
-          <p>You have no previous orders.</p>
+          // Message when no previous orders exist
+          <div className="flex flex-col items-center justify-center py-10 text-gray-600">
+            <span className="text-6xl mb-6">📦</span> {/* Box emoji */}
+            <p className="text-xl font-medium mb-3">No orders found yet!</p>
+            <p className="text-md mb-6 text-center max-w-sm">
+              It looks like you haven't placed any orders with us.
+              Start exploring our amazing products!
+            </p>
+            <button
+              onClick={() => nav("/")}
+              className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out"
+            >
+              Start Shopping
+            </button>
+          </div>
         )}
-
       </div>
-
-
     </div>
   );
 }

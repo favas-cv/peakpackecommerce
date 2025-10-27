@@ -2,82 +2,91 @@ import React, { useContext } from 'react';
 import useFetch from '../Customhooks/Fetchinghook';
 import { Bagcontext } from '../context/Bagcontext';
 import { Favoritescontext } from '../context/Favoritescontext';
-import { FaHeart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-
 function Topsellingproducts() {
-  const { data: products, loading, error } = useFetch(`http://localhost:8000/products?season=Winter`);
+  // Assuming a consistent base URL for products.
+  const { data: products, loading, error } = useFetch(`http://localhost:8000/products?_limit=8`); // Limiting for horizontal display
   const { addtoBag } = useContext(Bagcontext);
-  const { addtoFav ,favItems,toggleFav} = useContext(Favoritescontext);
+  const { favItems, toggleFav } = useContext(Favoritescontext);
   const nav = useNavigate();
 
-
- if (loading) {
-  return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <div className="relative w-10 h-10">
-        <div className="absolute w-full h-full border-4 border-green-800 border-t-transparent rounded-full animate-spin"></div>
+  // Loading State - Themed
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-lime-500"></div>
+        <p className="text-sky-950 text-lg font-semibold animate-pulse mt-4">
+          Gathering the best for your next adventure...
+        </p>
       </div>
-      <p className="text-green-800 text-lg font-semibold animate-pulse">
-        Please wait, products are loading...
-      </p>
-    </div>
-  );
-}
-  
-  if (error) return <p className="text-center mt-10 text-red-500">Error loading products</p>;
+    );
+  }
+
+  // Error State
+  if (error) return <p className="text-center mt-10 text-red-500">Error loading products. Please try again later.</p>;
 
   return (
-    <>
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Seasonal Specials (WINTER)</h1>
+    <div className="container mx-auto px-4 py-8">
       
-      <div className="overflow-x-auto">
-        <div className="flex gap-6 pb-4">
+      {/* Section Header */}
+      <div className="flex justify-center">
+        <h2 className="text-3xl text-sky-950 font-bold mb-6">Seasonal Products !</h2>
+      </div>
+  
+      
+      {/* Horizontal Scrollable Product List */}
+      <div className="relative">
+        <div 
+          className="flex overflow-x-scroll no-scrollbar py-4 -mx-4 px-4 gap-6" // Hides scrollbar
+        >
           {products.map((product) => (
             <div
-            onClick={()=>nav(`/shop/${product.id}`)}
               key={product.id}
-              className="relative min-w-[220px] bg-gradient-to-b from-white to-gray-50 shadow-lg rounded-2xl flex-shrink-0 hover:shadow-2xl transition transform hover:-translate-y-1 overflow-hidden"
+              onClick={() => nav(`/shop/${product.id}`)}
+              className="relative flex-shrink-0 w-60 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer border border-gray-100"
             >
-             <button
-                           className="absolute top-3 right-3 z-10 p-2"
-                           aria-label="Add to wishlist"
-                           onClick={(e) => {
-                             e.stopPropagation();
-                             toggleFav(product);
-                           }}
-                         >
-                           {favItems.some(f => f.id === product.id) ? (
-                             <AiFillHeart className="text-red-500 text-2xl" />
-                           ) : (
-                             <AiOutlineHeart className="text-black text-2xl" />
-                           )}
-                         </button>
+              {/* Wishlist Button */}
+              <button
+                className="absolute top-3 right-3 z-10 p-1 bg-white rounded-full shadow-md hover:shadow-lg transition"
+                aria-label="Add to wishlist"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFav(product);
+                }}
+              >
+                {favItems.some(f => f.id === product.id) ? (
+                  <AiFillHeart className="text-red-500 text-xl" />
+                ) : (
+                  <AiOutlineHeart className="text-sky-950 text-xl" />
+                )}
+              </button>
 
-              <div className="overflow-hidden rounded-t-2xl">
+              {/* Product Image */}
+              <div className="overflow-hidden rounded-t-xl">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-44 object-cover transform hover:scale-110 transition duration-500"
+                  className="w-full h-44 object-cover transform hover:scale-105 transition duration-500"
                 />
               </div>
 
-              <div className="p-4 text-center">
-                <h3 className="font-semibold text-sm truncate">{product.name}</h3>
-                <p className="text-gray-500 text-xs mt-1">
+              {/* Product Details */}
+              <div className="p-4 text-left"> {/* Aligned text to left for common e-commerce look */}
+                <h3 className="font-semibold text-base truncate text-sky-950 mb-1">{product.name}</h3>
+                <p className="text-gray-500 text-xs font-light">
                   {product.category} | {product.season}
                 </p>
-                <p className="mt-2 font-bold text-lg text-gray-800">${product.price}</p>
+                <p className="mt-3 font-extrabold text-xl text-sky-950">${product.price}</p>
 
+                {/* Add to Bag Button */}
                 <button
-                  onClick={(e) =>{
+                  onClick={(e) => {
                     e.stopPropagation();
-
-                    addtoBag(product)}
-                  } 
-                  className="mt-3 w-full bg-green-900 text-white text-sm font-semibold py-2 rounded-lg hover:bg-green-700 transition"
+                    addtoBag(product);
+                  }}
+                  className="mt-4 w-full bg-lime-500 text-sky-950 text-base font-bold py-2.5 rounded-lg hover:bg-lime-600 transition shadow-md"
                 >
                   Add to Bag
                 </button>
@@ -86,7 +95,7 @@ function Topsellingproducts() {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

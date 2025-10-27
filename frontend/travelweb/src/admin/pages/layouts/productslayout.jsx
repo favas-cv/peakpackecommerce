@@ -13,7 +13,8 @@ function Productslayout() {
         price: "",
         category: "",
         season: "",
-        image: ""
+        image: "",
+        description:""
     });
     const [editingproduct, seteditingproduct] = useState(null);
     const [showform, setshowform] = useState(false);
@@ -61,7 +62,7 @@ function Productslayout() {
                 setProductsList([res.data, ...productsList]); 
                 toast.success("Product added successfully!");
             }
-            setNewproduct({ name: "", price: "", category: "", season: "", image: "" });
+            setNewproduct({ name: "", price: "", category: "", season: "", image: "" ,description:""});
         } catch (err) {
             toast.error("Error adding product: " + err.message);
         }
@@ -138,6 +139,7 @@ function Productslayout() {
                     <input type="text" name="category" value={newproduct.category} onChange={handleChange} placeholder="Category" className="border p-2 rounded" />
                     <input type="text" name="season" value={newproduct.season} onChange={handleChange} placeholder="Season" className="border p-2 rounded" />
                     <input type="text" name="image" value={newproduct.image} onChange={handleChange} placeholder="Image URL" className="border p-2 rounded" />
+                    <input type="text" name="description" value={newproduct.description} onChange={handleChange} placeholder="Product Description" className="border p-2 rounded" />
                     <button type="submit" className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">
                         {editingproduct ? "Update the Product" : "Add the product"}
                     </button>

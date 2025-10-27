@@ -6,12 +6,12 @@ import { Usercontext } from './Usercontext';
 export const Bagcontext = createContext();
 
 export function Bagprovider({ children }) {
-  const {user} = useContext(Usercontext);
-  
-  const userid =user ? user.id : null;
-  const URL = userid?  `http://localhost:8000/users/${userid}`:null ;
+  const { user } = useContext(Usercontext);
+
+  const userid = user ? user.id : null;
+  const URL = userid ? `http://localhost:8000/users/${userid}` : null;
   const [bagItems, setBagitems] = useState([]);
-  const [loading,setloading] = useState(true);
+  const [loading, setloading] = useState(true);
 
 
   //placeorder
@@ -19,21 +19,21 @@ export function Bagprovider({ children }) {
 
 
   // showing bag
-  
+
   useEffect(() => {
     if (!userid) return;
     setloading(true);
     axios.get(URL)
       .then(res => setBagitems(res.data.bag || []))
       .catch(err => console.log(err))
-      .finally(()=>setloading(false));
+      .finally(() => setloading(false));
   }, [userid]);
 
   // adding to bag
 
   const addtoBag = async (item) => {
 
-    if(!userid){
+    if (!userid) {
       return toast.error("please login ")
     }
     try {
@@ -42,51 +42,52 @@ export function Bagprovider({ children }) {
 
       let updatedBag;
       if (exist) {
-        
-        toast.info("Item is already inside the bag",{toastId:`bag-${item.id}`});
-          return;
-        
+
+        toast.info("Item is already inside the bag", { toastId: `bag-${item.id}` });
+        return;
+
       } else {
-        
+
         updatedBag = [...(user.bag || []), { ...item, quantity: 1 }];
       }
 
       await axios.patch(URL, { bag: updatedBag });
       setBagitems(updatedBag);
 
-      toast.success(exist ? "Quantity increased" : "Item added", {
-        toastId: `bag-${item.id}`,
-      });
+      
+      toast.success(`${item.name} added to bag!`, {
+        toastId: `bag-${item.id}`});
+
 
     } catch (err) {
       toast.error("Error in adding: " + err);
     }
   };
 
-//removing from bag
+  //removing from bag
 
-  const removefromBag = async (id) => {
+  const removefromBag = async (item) => {
     try {
       const { data: user } = await axios.get(URL);
-      const exist = (user.bag || []).find(i => i.id === id);
+      const exist = (user.bag || []).find(i => i.id === item.id);
 
       let updatedBag;
       if (exist) {
-        updatedBag = user.bag.filter(i => i.id !== id);
+        updatedBag = user.bag.filter(i => i.id !== item.id);
       } else {
         updatedBag = user.bag || [];
       }
 
       await axios.patch(URL, { bag: updatedBag });
       setBagitems(updatedBag);
-      toast.success("Removed", { toastId: `remove-${id}` });
+      toast.success(`${item.name} is removed from bag`, { toastId: `remove-${item.id}` });
 
     } catch (err) {
       toast.error("Error in removing: " + err);
     }
   };
 
-//increase quantity
+  //increase quantity
 
   const increaseQuantity = async (id) => {
     try {
@@ -128,7 +129,6 @@ export function Bagprovider({ children }) {
   const clearBag = async () => {
     await axios.patch(URL, { bag: [] });
     setBagitems([]);
-    toast.success("Cleared successfully");
   };
 
   // bag count
@@ -166,7 +166,7 @@ export function Bagprovider({ children }) {
         charge,
         URL,
         loading
-        
+
       }}
     >
       {children}

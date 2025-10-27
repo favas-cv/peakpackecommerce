@@ -89,22 +89,35 @@ function Productspage() {
   
 if (loading) {
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-4">
-      <div className="relative w-20 h-20">
-        <div className="absolute w-full h-full border-4 border-green-800 border-t-transparent rounded-full animate-spin"></div>
+    <div className="flex flex-col justify-center items-center h-screen">
+      <div className="flex flex-col justify-center items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-green-800"></div>
+        <p className="text-green-800 text-lg font-semibold animate-pulse mt-2">
+          Please wait, your products are loading...
+        </p>
       </div>
-      <p className="text-green-800 text-lg font-semibold animate-pulse">
-        Please wait, your products are loading...
-      </p>
     </div>
   );
 }
+
+
 
 
   return (
     
     
     <>
+
+           <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: "url('/images/shadowbg.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundColor: '#c1e3b9ff' // Fallback color
+      }}
+
+    >
     
 
 
@@ -125,80 +138,77 @@ if (loading) {
 {/* season */}
 
       {selectedSeason === 'Winter' && selectedCategory==='All'  && <img src='/images/winterhero1.jpg' />}
-      {selectedSeason === 'Summer'  && selectedCategory==='All' && <img src='/images/summerhero1.jpg' />}
-      {selectedSeason === 'Rainy'  && selectedCategory==='All' && <img src='/images/rainhero1.jpg' />}
+      {selectedSeason === 'Summer'  && selectedCategory==='All' && <img src='/images/summerhero.png' />}
+      {selectedSeason === 'Rainy'  && selectedCategory==='All' && <img src='/images/rainyhero.png' />}
 
     
 
 {/* category */}
       {selectedCategory === 'All' && selectedSeason==="All" && <img 
-      onClick={()=>nav("/shop?season=Winter")}
-      src='/images/winterhero1.jpg' />}
+      onClick={()=>nav("/shop?category=Camping")}
+      src='/images/campinghero.jpg' />}
 
       {selectedCategory === 'Camping' && <img src='/images/campinghero.jpg' />}
-      {selectedCategory === 'Trekking' && <img src='/images/trekkinghero3.jpg' />}
+      {selectedCategory === 'Trekking' && <img src='/images/trekkinghero.png' />}
       {selectedCategory === 'Beach-Trips'&& <img src='/images/beachhero3.jpg' />}
-      {selectedCategory === 'Rainy'&& <img src='/images/rainhero1.jpg' />}
-      {selectedCategory === 'Electronics'&& <img src='/images/gadgetshero1.jpg' />}
+      {selectedCategory === 'Rainy'&& <img src='/images/rainyhero.png' />}
+      {selectedCategory === 'Electronics'&& <img src='/images/gadgethero.png' />}
 
 
 
       {/*products*/}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-6">
-        {displayedProducts.map((product) => (
-          <div
-            key={product.id}
-            className="relative bg-white/70 backdrop-blur-lg text-gray-900 rounded-2xl shadow-md hover:shadow-xl transition duration-300 hover:scale-105 overflow-hidden cursor-pointer"
-            onClick={() => nav(`/shop/${product.id}`)}
+     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-6">
+    {displayedProducts.map((product) => (
+      <div
+        key={product.id}
+        className="relative bg-white text-gray-900 rounded-xl shadow-lg hover:shadow-xl transition duration-300 hover:scale-[1.03] overflow-hidden cursor-pointer border border-gray-100"
+        onClick={() => nav(`/shop/${product.id}`)}
+      >
+        <button
+          className="absolute top-3 right-3 z-10 p-1 bg-white rounded-full shadow-md hover:shadow-lg transition"
+          aria-label="Add to wishlist"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleFav(product);
+          }}
+        >
+          {favItems.find(f => f.id === product.id) ? (
+            <AiFillHeart className="text-red-500 text-xl" />
+          ) : (
+            <AiOutlineHeart className="text-sky-950 text-xl" /> 
+          )}
+        </button>
+
+        {/* Product Image */}
+        <div className="relative overflow-hidden rounded-t-xl">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-40 object-cover transform hover:scale-105 transition duration-500"
+          />
+        </div>
+
+        {/* Product Details */}
+        <div className="p-3">
+          <h3 className="font-semibold text-sm truncate text-sky-950 mb-1">{product.name}</h3>
+          <p className="text-gray-500 text-xs font-light">
+            {product.category} | {product.season}
+          </p>
+          
+          <p className="mt-2 font-extrabold text-xl text-sky-950">${product.price}</p>
+
+          <button
+            onClick={(e) => { e.stopPropagation(); addtoBag(product); }}
+            className="mt-3 w-full bg-lime-500 text-sky-950 text-sm font-bold py-2 rounded-lg hover:bg-lime-600 transition shadow-md"
           >
-            <button
-              className="absolute top-3 right-3 z-10 p-2"
-              aria-label="Add to wishlist"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleFav(product);
-              }}
-            >
-              {favItems.find(f => f.id === product.id) ? (
-                <AiFillHeart className="text-red-500 text-2xl" />
-              ) : (
-                <AiOutlineHeart className="text-black text-2xl" />
-              )}
-            </button>
-
-
-
-
-            <div className="relative overflow-hidden rounded-t-2xl">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-44 object-cover transform hover:scale-110 transition duration-500"
-              />
-            </div>
-
-
-
-            <div className="p-4">
-              <h3 className="font-semibold text-sm truncate text-green-900">{product.name}</h3>
-              <p className="text-gray-600 text-xs">
-                {product.category} | {product.season}
-              </p>
-              <p className="mt-2 font-bold text-lg text-green-800">${product.price}</p>
-
-
-
-              <button
-                onClick={(e) => { e.stopPropagation(); addtoBag(product); }}
-                className="mt-4 w-full bg-green-900 text-white text-sm font-semibold py-2 rounded-xl hover:bg-green-800 transition"
-              >
-                Add to Bag
-              </button>
-            </div>
-          </div>
-        ))}
+            Add to Bag
+          </button>
+        </div>
       </div>
+    ))}
+</div>
+</div>
 
     </>)
 }

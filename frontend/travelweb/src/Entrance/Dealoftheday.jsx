@@ -1,55 +1,58 @@
-import React, { useContext } from 'react'
-import useFetch from '../Customhooks/Fetchinghook'
-import { Bagcontext } from '../context/Bagcontext'
+import React, { useContext } from 'react';
+import useFetch from '../Customhooks/Fetchinghook';
+import { Bagcontext } from '../context/Bagcontext';
 import { Favoritescontext } from '../context/Favoritescontext';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-
 function Dealoftheday() {
-  const { addtoBag } = useContext(Bagcontext)
-  const { favItems,addtoFav, toggleFav } = useContext(Favoritescontext);
+  const { addtoBag } = useContext(Bagcontext);
+  const { favItems, toggleFav } = useContext(Favoritescontext);
   const nav = useNavigate();
 
+  // Assuming you want more than one product for "Deal of the Day", let's limit it for the horizontal view
+  const { data: products, loading, error } = useFetch('http://localhost:8000/products?season=Summer&_limit=8');
 
-  const { data: products, loading, error } = useFetch('http://localhost:8000/products?season=Summer')
-
- if (loading) {
-  return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <div className="relative w-10 h-10">
-        <div className="absolute w-full h-full border-4 border-green-800 border-t-transparent rounded-full animate-spin"></div>
+  // Loading State - Themed
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-lime-500"></div>
+        <p className="text-sky-950 text-lg font-semibold animate-pulse mt-4">
+          Finding the best summer deals...
+        </p>
       </div>
-      <p className="text-green-800 text-lg font-semibold animate-pulse">
-        Please wait, products are loading...
-      </p>
-    </div>
-  );
-}
+    );
+  }
 
-  if (error) return <p>Something went wrong!</p>
+  // Error State - Themed
+  if (error) return <p className="text-center mt-10 text-red-500">Something went wrong! Failed to load deals.</p>;
 
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-4">Deal of the Day</h1>
-      <div className="overflow-x-auto">
-        <div className="flex gap-6">
+    <div className="container mx-auto px-4 py-8">
+      
+    
+      <h2 className="text-3xl font-extrabold mb-8 text-sky-950 text-center">Deal Of The Week !</h2>
+
+      
+   
+      
+      {/* Horizontal Scrollable Product List */}
+      <div className="relative">
+        <div 
+          className="flex overflow-x-scroll no-scrollbar py-4 -mx-4 px-4 gap-6" // Hides scrollbar
+        >
           {products.map((product) => (
             <div
-              onClick={() => nav(`/shop/${product.id}`)}
               key={product.id}
-              className="min-w-[200px] bg-white/80 backdrop-blur-md text-black rounded-xl shadow-lg flex-shrink-0 hover:shadow-2xl transition duration-300 overflow-hidden"
+              onClick={() => nav(`/shop/${product.id}`)}
+              // Clean, simple card style
+              className="relative flex-shrink-0 w-60 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer border border-gray-100"
             >
-              <div className="overflow-hidden rounded-t-xl">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-40 object-cover transform hover:scale-110 transition duration-500"
-                />
-              </div>
-
+              
+              {/* Wishlist Button */}
               <button
-                className="absolute top-3 right-3 z-10 p-2"
+                className="absolute top-3 right-3 z-10 p-1 bg-white rounded-full shadow-md hover:shadow-lg transition"
                 aria-label="Add to wishlist"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -57,21 +60,39 @@ function Dealoftheday() {
                 }}
               >
                 {favItems.some(f => f.id === product.id) ? (
-                  <AiFillHeart className="text-red-500 text-2xl" />
+                  <AiFillHeart className="text-red-500 text-xl" />
                 ) : (
-                  <AiOutlineHeart className="text-black text-2xl" />
+                  <AiOutlineHeart className="text-sky-950 text-xl" /> // Themed outline color
                 )}
               </button>
 
-              <div className="p-3">
-                <h3 className="font-semibold text-sm truncate">{product.name}</h3>
-                <p className="text-gray-600 text-xs">
+              {/* Product Image */}
+              <div className="overflow-hidden rounded-t-xl">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-44 object-cover transform hover:scale-105 transition duration-500"
+                />
+              </div>
+
+              {/* Product Details */}
+              <div className="p-4 text-left">
+                <h3 className="font-semibold text-base truncate text-sky-950 mb-1">{product.name}</h3>
+                <p className="text-gray-500 text-xs font-light">
                   {product.category} | {product.season}
                 </p>
-                <p className="mt-1 font-bold text-base">${product.price}</p>
+                
+                {/* Price - Themed */}
+                <p className="mt-3 font-extrabold text-xl text-sky-950">${product.price}</p>
 
+                {/* Add to Bag Button - Themed */}
                 <button
-                  onClick={(e) => { e.stopPropagation(); addtoBag(product) }} className="mt-3 w-full bg-green-900 text-white text-sm font-medium py-2 rounded hover:bg-gray-800 transition">
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addtoBag(product);
+                  }}
+                  className="mt-4 w-full bg-lime-500 text-sky-950 text-base font-bold py-2.5 rounded-lg hover:bg-lime-600 transition shadow-md"
+                >
                   Add to Bag
                 </button>
               </div>
@@ -79,8 +100,8 @@ function Dealoftheday() {
           ))}
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default Dealoftheday
+export default Dealoftheday;

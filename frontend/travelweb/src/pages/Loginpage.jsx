@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,128 +7,129 @@ import { Usercontext } from "../context/Usercontext";
 
 function Loginpage() {
   const nav = useNavigate();
-  const { user, setuser } = useContext(Usercontext);
+  const { setuser } = useContext(Usercontext); // Removed 'user' as it's not directly used here
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-
-
   async function HandleLogin(e) {
     e.preventDefault();
+    setError(""); // Clear previous errors
+
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      return;
+    }
+
     try {
       const res = await axios.get(
         `http://localhost:8000/users?email=${email}&password=${password}`
       );
 
-
       if (res.data.length > 0) {
         const loggeduser = res.data[0];
-        localStorage.setItem("user", JSON.stringify(loggeduser));
-        setuser(loggeduser);
 
         if (loggeduser.status === "blocked") {
-          toast.error("You Are blocked from admin , Sorry")
+          toast.error("You are blocked by the admin. Please contact support.", { toastId: "blockedUser" });
           return;
-
         }
-        setError("");
 
+        localStorage.setItem("user", JSON.stringify(loggeduser));
+        setuser(loggeduser);
 
         toast.success("Login Successful!", { toastId: "loginSuccess" });
 
         if (loggeduser.role === "admin") {
-          toast("Welcome Admin");
+          toast.info("Welcome Admin", { toastId: "adminLogin" });
           nav("/admin/dashboard");
-        }
-        else {
+        } else {
           nav("/");
-          toast("welcome " + loggeduser.name)
+          toast.info("Welcome " + loggeduser.name, { toastId: "userWelcome" });
         }
       } else {
-        toast.error("Invalid user, please register", { toastId: "loginError" });
+        toast.error("Invalid email or password. Please try again.", { toastId: "loginError" });
       }
     } catch (err) {
-      console.error(err);
-      setError("Something went wrong, please try again");
+      console.error("Login error:", err);
+      setError("Something went wrong. Please try again later.");
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="flex flex-col items-center relative">
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{
+        backgroundImage: "url('/images/shadowbg.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundColor: '#c1e3b9ff' // Fallback color
+      }}
 
-        {/* bag */}
+    >     
+     <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
 
-        <div className="relative w-70 h-93 bg-green-800 rounded-t-4xl rounded-b-2xl flex flex-col items-center pt-6">
-          <div className="absolute -top-8 w-20 h-14 border-10 border-green-800 rounded-full"></div>
-
-          <div className="absolute left-[-30px] bottom-10 w-14 h-30 bg-green-800 rounded-xl shadow-lg"></div>
-          <div className="absolute right-[-30px] bottom-9 w-14 h-30 bg-green-800 rounded-xl shadow-lg"></div>
-
-          <div
-            className="w-0 h-0  border-l-[50px] border-r-[50px] border-b-[60px] border-l-transparent border-r-transparent border-b-orange-600 mb-4"
-          >
-          </div>
-
-
-          {/* login */}
-
-          <div className="w-57 bg-white p-5 rounded-2xl shadow-md flex flex-col items-center">
-            <h1 className="text-xl font-bold text-gray-800 mb-3">Login</h1>
-
-            {error && (
-              <p className="text-red-500 text-sm mb-2 text-center">{error}</p>
-            )}
-
-            <form className="flex flex-col w-full" onSubmit={HandleLogin}>
-              <input
-                type="text"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 mb-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400"
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 mb-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400"
-              />
-              <p className="text-xs text-gray-500 mb-1 text-center">
-                <Link
-                  to="/forgotpassword"
-                  className="text-red-500 hover:underline cursor-pointer"
-                >
-                  Forgot password
-                </Link>
-              </p>
-
-              <button
-                type="submit"
-                className="w-full bg-green-800 hover:bg-orange-500 text-white font-bold py-2 rounded-md transition duration-200"
-              >
-                Login
-              </button>
-            </form>
-
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              Don't have an account?{" "}
-              <Link
-                to="/registerpage"
-                className="text-orange-500 hover:underline cursor-pointer"
-              >
-                Register
-              </Link>
-            </p>
-          </div>
+        {/* Logo Section */}
+        <div className="flex flex-col items-center mb-6">
+          <img
+            src="/images/loginreglogo.jpg"
+            alt="PEAKPACK Logo"
+            className="h-35 mb-2"
+          />
+          <h1 className="text-3xl font-extrabold text-center text-sky-950">
+            Welcome Back!
+          </h1>
         </div>
 
-        <h1 className="mt-6 text-4xl font-bold">
-          <span className="text-black">Peak</span>
-          <span className="text-orange-500">Pack</span>
-        </h1>
+        {error && (
+          <p className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6 text-center text-sm">
+            {error}
+          </p>
+        )}
+
+        <form className="flex flex-col space-y-5" onSubmit={HandleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-950 focus:border-transparent placeholder-gray-500 transition duration-200 text-gray-800"
+            aria-label="Email"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-950 focus:border-transparent placeholder-gray-500 transition duration-200 text-gray-800"
+            aria-label="Password"
+          />
+
+          <div className="text-right"> {/* Align "Forgot password" to the right */}
+            <Link
+              to="/forgotpassword"
+              className="font-medium text-sky-950 hover:text-teal-800 hover:underline transition duration-200 text-sm"
+            >
+              Forgot Password?
+            </Link>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-lime-500 hover:bg-sky-950 text-white font-bold py-3 px-5 rounded-lg shadow-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          >
+            Log In
+          </button>
+        </form>
+
+        <p className="text-sm text-gray-600 mt-6 text-center">
+          Don't have an account?{" "}
+          <Link
+            to="/registerpage"
+            className="font-semibold text-sky-950 hover:text-teal-800 hover:underline transition duration-200"
+          >
+            Register now
+          </Link>
+        </p>
       </div>
     </div>
   );
