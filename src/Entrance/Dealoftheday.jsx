@@ -5,12 +5,13 @@ import { Favoritescontext } from '../context/Favoritescontext';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
-function Topsellingproducts() {
-  // Assuming a consistent base URL for products.
-  const { data: products, loading, error } = useFetch(`http://localhost:8000/products?_limit=8`); // Limiting for horizontal display
+function Dealoftheday() {
   const { addtoBag } = useContext(Bagcontext);
   const { favItems, toggleFav } = useContext(Favoritescontext);
   const nav = useNavigate();
+
+  // Assuming you want more than one product for "Deal of the Day", let's limit it for the horizontal view
+  const { data: products, loading, error } = useFetch('https://peakpackbackend.onrender.com/products?season=Summer&_limit=8');
 
   // Loading State - Themed
   if (loading) {
@@ -18,23 +19,23 @@ function Topsellingproducts() {
       <div className="flex flex-col justify-center items-center h-64">
         <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-lime-500"></div>
         <p className="text-sky-950 text-lg font-semibold animate-pulse mt-4">
-          Gathering the best for your next adventure...
+          Finding the best summer deals...
         </p>
       </div>
     );
   }
 
-  // Error State
-  if (error) return <p className="text-center mt-10 text-red-500">Error loading products. Please try again later.</p>;
+  // Error State - Themed
+  if (error) return <p className="text-center mt-10 text-red-500">Something went wrong! Failed to load deals.</p>;
 
   return (
     <div className="container mx-auto px-4 py-8">
       
-      {/* Section Header */}
-      <div className="flex justify-center">
-        <h2 className="text-3xl text-sky-950 font-bold mb-6">Seasonal Products !</h2>
-      </div>
-  
+    
+      <h2 className="text-3xl font-extrabold mb-8 text-sky-950 text-center">Deal Of The Week !</h2>
+
+      
+   
       
       {/* Horizontal Scrollable Product List */}
       <div className="relative">
@@ -45,8 +46,10 @@ function Topsellingproducts() {
             <div
               key={product.id}
               onClick={() => nav(`/shop/${product.id}`)}
+              // Clean, simple card style
               className="relative flex-shrink-0 w-60 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer border border-gray-100"
             >
+              
               {/* Wishlist Button */}
               <button
                 className="absolute top-3 right-3 z-10 p-1 bg-white rounded-full shadow-md hover:shadow-lg transition"
@@ -59,7 +62,7 @@ function Topsellingproducts() {
                 {favItems.some(f => f.id === product.id) ? (
                   <AiFillHeart className="text-red-500 text-xl" />
                 ) : (
-                  <AiOutlineHeart className="text-sky-950 text-xl" />
+                  <AiOutlineHeart className="text-sky-950 text-xl" /> // Themed outline color
                 )}
               </button>
 
@@ -73,14 +76,16 @@ function Topsellingproducts() {
               </div>
 
               {/* Product Details */}
-              <div className="p-4 text-left"> {/* Aligned text to left for common e-commerce look */}
+              <div className="p-4 text-left">
                 <h3 className="font-semibold text-base truncate text-sky-950 mb-1">{product.name}</h3>
                 <p className="text-gray-500 text-xs font-light">
                   {product.category} | {product.season}
                 </p>
+                
+                {/* Price - Themed */}
                 <p className="mt-3 font-extrabold text-xl text-sky-950">${product.price}</p>
 
-                {/* Add to Bag Button */}
+                {/* Add to Bag Button - Themed */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -99,4 +104,4 @@ function Topsellingproducts() {
   );
 }
 
-export default Topsellingproducts;
+export default Dealoftheday;

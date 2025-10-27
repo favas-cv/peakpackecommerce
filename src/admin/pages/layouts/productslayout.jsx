@@ -4,8 +4,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 function Productslayout() {
-    const { data: products, loading, error } = useFetch("http://localhost:8000/products");
-    const URL = "http://localhost:8000/products";
+    const URL = "https://peakpackbackend.onrender.com";
+    const { data: products, loading, error } = useFetch(`${URL}/products`);
 
     const [productsList, setProductsList] = useState([]);
     const [newproduct, setNewproduct] = useState({

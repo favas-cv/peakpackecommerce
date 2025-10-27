@@ -9,7 +9,7 @@ export function Bagprovider({ children }) {
   const { user } = useContext(Usercontext);
 
   const userid = user ? user.id : null;
-  const URL = userid ? `http://localhost:8000/users/${userid}` : null;
+  const URL = userid ? `https://peakpackbackend.onrender.com/users/${userid}` : null;
   const [bagItems, setBagitems] = useState([]);
   const [loading, setloading] = useState(true);
 

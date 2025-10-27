@@ -29,7 +29,7 @@ export default function Addressbar({ onSave }) {
     }
 
     try {
-      await axios.patch(`http://localhost:8000/users/${userid}`, { address: Address });
+      await axios.patch(`https://peakpackbackend.onrender.com/users/${userid}`, { address: Address });
       
       const storedUser = JSON.parse(localStorage.getItem("user")) || {};
       const updatedUser = { ...storedUser, address: Address };

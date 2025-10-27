@@ -9,7 +9,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 function Productspage() {
 
-  const { data: products, error, loading } = useFetch('http://localhost:8000/products');
+  const { data: products, error, loading } = useFetch('https://peakpackbackend.onrender.com/products');
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);

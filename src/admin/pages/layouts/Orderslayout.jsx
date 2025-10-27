@@ -4,7 +4,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 function Orderslayout() {
-  const { data: users ,loading,error} = useFetch("http://localhost:8000/users");
+  const URL = "https://peakpackbackend.onrender.com";
+
+  const { data: users ,loading,error} = useFetch(`${URL}/users`);
   const [orderslist, setOrderslist] = useState([]);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ function Orderslayout() {
       o.date === order.date ? { ...o, status: newStatus } : o
     );
 
-    await axios.patch(`http://localhost:8000/users/${order.userId}`, {
+    await axios.patch(`${URL}/users/${order.userId}`, {
       orders: updatedOrders,
     });
 

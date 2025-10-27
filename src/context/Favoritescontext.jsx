@@ -10,7 +10,7 @@ export function Favoritesprovider({ children }) {
   const {user} = useContext(Usercontext);
 
   const userid=user?user.id:null;
-  const URL = `http://localhost:8000/users/${userid}`;
+  const URL = `https://peakpackbackend.onrender.com/users/${userid}`;
   const [favItems, setFavitems] = useState([]);
   const [loading,setloading] = useState(true);
 

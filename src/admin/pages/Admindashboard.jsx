@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 
 function Admindashboard() {
-    const { data: products } = useFetch('http://localhost:8000/products')
-    const { data: users } = useFetch('http://localhost:8000/users');
+    const { data: products } = useFetch('https://peakpackbackend.onrender.com/products')
+    const { data: users } = useFetch('https://peakpackbackend.onrender.com/users');
     const nav = useNavigate();
 
     const [revenue, setRevenue] = useState(0);

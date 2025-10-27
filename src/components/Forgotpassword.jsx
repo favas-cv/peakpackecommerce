@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 function Forgotpassword() {
-    const URL = "http://localhost:8000/users";
+    const URL = "https://peakpackbackend.onrender.com/users";
     const [password, setpassword] = useState("");
     const [email, setemail] = useState('');
     const [error, seterror] = useState("");

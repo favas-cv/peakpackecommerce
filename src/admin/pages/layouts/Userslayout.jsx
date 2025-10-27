@@ -4,9 +4,9 @@ import axios, { Axios } from 'axios';
 import { toast } from 'react-toastify';
 
 function Userslayout() {
-    const { data: users, loading, error } = useFetch("http://localhost:8000/users");
+    const { data: users, loading, error } = useFetch("https://peakpackbackend.onrender.com/users");
     const [userlist, setuserlist] = useState([]);
-    const URL = "http://localhost:8000/users";
+    const URL = "https://peakpackbackend.onrender.com/users";
     const [newuser, setnewuser] = useState({
         name: "",
         email: "",

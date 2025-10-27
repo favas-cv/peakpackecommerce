@@ -41,14 +41,14 @@ function Registerpage() {
         }
 
         try {
-            const res = await axios.get(`http://localhost:8000/users?email=${email}`);
+            const res = await axios.get(`https://peakpackbackend.onrender.com/users?email=${email}`);
             if (res.data.length > 0) {
                 setError('Email already registered. Please login.');
                 return;
             }
 
             const Newuser = { name, email, password, status, bag, favorites, orders, role };
-            await axios.post('http://localhost:8000/users', Newuser);
+            await axios.post('https://peakpackbackend.onrender.com/users', Newuser);
             toast.success('Registration successful! You can now log in.', {
                 toastId: 'Registersuccess'
             });

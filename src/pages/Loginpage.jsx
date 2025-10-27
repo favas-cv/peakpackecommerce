@@ -23,7 +23,7 @@ function Loginpage() {
 
     try {
       const res = await axios.get(
-        `http://localhost:8000/users?email=${email}&password=${password}`
+        `https://peakpackbackend.onrender.com/users?email=${email}&password=${password}`
       );
 
       if (res.data.length > 0) {

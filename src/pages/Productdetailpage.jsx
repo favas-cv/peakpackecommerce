@@ -15,7 +15,7 @@ function ProductDetailPage() {
 
   useEffect(() => {
     // Note: Ensure your axios endpoint is correct (e.g., if you are using a proxy or a different URL in production)
-    axios.get(`http://localhost:8000/products/${id}`)
+    axios.get(`https://peakpackbackend.onrender.com/products/${id}`)
       .then(res => setProduct(res.data))
       .catch(err => {
         console.error("Error fetching product details:", err);
