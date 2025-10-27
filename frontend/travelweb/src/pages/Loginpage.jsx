@@ -37,14 +37,13 @@ function Loginpage() {
         localStorage.setItem("user", JSON.stringify(loggeduser));
         setuser(loggeduser);
 
-        toast.success("Login Successful!", { toastId: "loginSuccess" });
 
         if (loggeduser.role === "admin") {
           toast.info("Welcome Admin", { toastId: "adminLogin" });
           nav("/admin/dashboard");
         } else {
           nav("/");
-          toast.info("Welcome " + loggeduser.name, { toastId: "userWelcome" });
+          toast.success("Welcome " + loggeduser.name, { toastId: "userWelcome" });
         }
       } else {
         toast.error("Invalid email or password. Please try again.", { toastId: "loginError" });
