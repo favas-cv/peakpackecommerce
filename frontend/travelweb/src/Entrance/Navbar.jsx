@@ -6,7 +6,7 @@ function Navbar() {
   const nav = useNavigate();
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-md text-black px-6 py-4 flex justify-between items-center">
+    <nav className="sticky top-0 z-50 backdrop-blur-md h-16 text-black px-6 py-4 flex justify-between items-center">
       
       {/* Left: Brand name (desktop) / logo (mobile) */}
       <div
@@ -21,9 +21,9 @@ function Navbar() {
 
         {/* Mobile logo */}
         <img
-          src="/images/logomainone.png" // 👈 your logo image path
+          src="/images/peakicon.png" // 👈 your logo image path
           alt="PeakPack Logo"
-          className="w-12 h-10 md:hidden"
+          className=" w-16 md:hidden"
         />
       </div>
 
